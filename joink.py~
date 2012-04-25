@@ -1,0 +1,69 @@
+#join-k solution
+
+def fall(line, n):
+    pointer = n-1
+    line.reverse()
+
+    index = 0
+    openIndex = 0
+    for c in line:
+        if c != '.':
+            line[index] = '.'
+            line[openIndex] = c
+            openIndex += 1
+            
+        index += 1
+    line.reverse()
+
+'''        
+    for i in range(n-1,-1,-1):
+
+
+        if line[i] != '.':
+            line[pointer] = line[i]
+            line[i] = '.'
+            pointer -= 1
+'''
+            
+def row(board,k):
+    winner = []
+    for r in board:
+        streak = 1
+        prev = ''
+        r.reverse()
+
+        for ch in r:
+            if ch == '.':
+                break
+            else:
+                if prev == ch:
+                    streak += 1
+                else:
+                    prev = ch
+                    streak = 1
+            if streak >= k and (prev not in winner):
+                winner.append(prev)
+    return winner
+                
+def col(board,k):
+    temp = []
+    for c in zip(*board):
+        if c != None:
+            temp.append(list(c))
+
+    winner = row(temp,k)
+    #    temp = zip(*board)
+    
+    
+t = int(raw_input())
+for i in range(1,t+1):
+    param = raw_input().split(' ')
+    n = int(param[0])
+    k = int(param[1])
+    board = []
+    for j in range(1,n+1):
+        line = list(raw_input())
+        fall(line,n)
+        board.append(line)
+
+    print col(board,k)
