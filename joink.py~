@@ -32,7 +32,9 @@ def row(board,k):
         prev = ''
         r.reverse()
 
+
         for ch in r:
+
             if ch == '.':
                 break
             else:
@@ -41,8 +43,10 @@ def row(board,k):
                 else:
                     prev = ch
                     streak = 1
+
             if streak >= k and (prev not in winner):
                 winner.append(prev)
+
     return winner
                 
 def col(board,k):
@@ -52,9 +56,76 @@ def col(board,k):
             temp.append(list(c))
 
     winner = row(temp,k)
-    #    temp = zip(*board)
-    
-    
+    return winner
+
+def diag1(board,k,n):
+    for c in board:
+        print c
+    winner = []
+    for i in range(0,n):
+        streak = 1
+        prev = ''
+        
+        for j in range(0,i+1):
+            if board[i-j][j] != prev:
+                streak = 1
+                prev = board[i-j][j]
+            else:
+                streak += 1
+            if (prev != '.') and (streak >= k) and (prev not in winner):
+                winner.append(prev)
+            
+#            print board[i-j][j]
+    for i in range(1,n):
+        streak = 1
+        prev = ''
+        for j in range(0,n-i):
+            if board[n-j-1][i+j] != prev:
+                streak = 1
+                prev = board[n-j-1][i+j]
+            else:
+                streak += 1
+            if (prev != '.') and (streak >= k) and (prev not in winner):
+                winner.append(prev)
+    return winner
+#            print board[n-j-1][i+j]
+#            print (n-j-1,i+j)
+
+def diag2(board,k,n):
+    for c in board:
+        print c
+    winner = []
+    for i in range(n-1,-1,-1):
+        streak = 1
+        prev = ''
+        
+        for j in range(0,i+1):
+            print (j,i+j)
+'''            
+            if board[j][i+j] != prev:
+                streak = 1
+                prev = board[j][i+j]
+            else:
+                streak += 1
+            if (prev != '.') and (streak >= k) and (prev not in winner):
+                winner.append(prev)
+            
+#            print board[i-j][j]
+    for i in range(1,n):
+        streak = 1
+        prev = ''
+        for j in range(0,n-i):
+            if board[i+j][n-j-1] != prev:
+                streak = 1
+                prev = board[i+j][n-j-1]
+            else:
+                streak += 1
+            if (prev != '.') and (streak >= k) and (prev not in winner):
+                winner.append(prev)
+'''
+#    return winner
+
+
 t = int(raw_input())
 for i in range(1,t+1):
     param = raw_input().split(' ')
@@ -65,5 +136,5 @@ for i in range(1,t+1):
         line = list(raw_input())
         fall(line,n)
         board.append(line)
-
-    print col(board,k)
+    print diag2(board,k,n)
+#    print col(board,k)

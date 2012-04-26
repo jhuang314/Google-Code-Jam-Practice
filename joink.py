@@ -59,8 +59,6 @@ def col(board,k):
     return winner
 
 def diag1(board,k,n):
-    for c in board:
-        print c
     winner = []
     for i in range(0,n):
         streak = 1
@@ -92,38 +90,40 @@ def diag1(board,k,n):
 #            print (n-j-1,i+j)
 
 def diag2(board,k,n):
-    for c in board:
-        print c
+
     winner = []
-    for i in range(n-1,-1,-1):
+
+    for i in range(0,n):
         streak = 1
         prev = ''
         
-        for j in range(0,i+1):
-            print (j,i+j)
-'''            
+        for j in range(0,i):
+            if board[n-i+j][j] != prev:
+                streak = 1
+                prev = board[n-i+j][j]
+            else:
+                streak += 1
+
+            if (prev != '.') and (streak >= k) and (prev not in winner):
+                winner.append(prev)
+
+#            print board[n-i+j][j]        
+
+
+    for i in range(0,n+1):
+        streak = 1
+        prev = ''
+        for j in range(0,n-i):
             if board[j][i+j] != prev:
                 streak = 1
                 prev = board[j][i+j]
             else:
                 streak += 1
+
             if (prev != '.') and (streak >= k) and (prev not in winner):
                 winner.append(prev)
-            
-#            print board[i-j][j]
-    for i in range(1,n):
-        streak = 1
-        prev = ''
-        for j in range(0,n-i):
-            if board[i+j][n-j-1] != prev:
-                streak = 1
-                prev = board[i+j][n-j-1]
-            else:
-                streak += 1
-            if (prev != '.') and (streak >= k) and (prev not in winner):
-                winner.append(prev)
-'''
-#    return winner
+
+    return winner
 
 
 t = int(raw_input())
@@ -136,5 +136,23 @@ for i in range(1,t+1):
         line = list(raw_input())
         fall(line,n)
         board.append(line)
-    print diag2(board,k,n)
-#    print col(board,k)
+
+    d1 = diag1(board,k,n)
+    d2 = diag2(board,k,n)
+    cv = col(board,k)
+    rv = row(board,k)
+
+    result = []
+
+    if 'R' in (d1+d2+cv+rv):
+        if 'B' in (d1+d2+cv+rv):
+            print "Case #" + str(i) + ": Both"
+        else:
+            print "Case #" + str(i) + ": Red"
+            
+    elif 'B' in (d1+d2+cv+rv):
+        print "Case #" + str(i) + ": Blue"
+    else:
+        print "Case #" + str(i) + ": Neither"
+
+            
