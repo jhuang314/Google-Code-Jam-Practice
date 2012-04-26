@@ -15,16 +15,6 @@ def fall(line, n):
         index += 1
     line.reverse()
 
-'''        
-    for i in range(n-1,-1,-1):
-
-
-        if line[i] != '.':
-            line[pointer] = line[i]
-            line[i] = '.'
-            pointer -= 1
-'''
-            
 def row(board,k):
     winner = []
     for r in board:
@@ -72,8 +62,7 @@ def diag1(board,k,n):
                 streak += 1
             if (prev != '.') and (streak >= k) and (prev not in winner):
                 winner.append(prev)
-            
-#            print board[i-j][j]
+
     for i in range(1,n):
         streak = 1
         prev = ''
@@ -86,8 +75,6 @@ def diag1(board,k,n):
             if (prev != '.') and (streak >= k) and (prev not in winner):
                 winner.append(prev)
     return winner
-#            print board[n-j-1][i+j]
-#            print (n-j-1,i+j)
 
 def diag2(board,k,n):
 
@@ -106,9 +93,6 @@ def diag2(board,k,n):
 
             if (prev != '.') and (streak >= k) and (prev not in winner):
                 winner.append(prev)
-
-#            print board[n-i+j][j]        
-
 
     for i in range(0,n+1):
         streak = 1
